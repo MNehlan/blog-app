@@ -7,13 +7,13 @@ import { ToastProvider } from './context/ToastContext.jsx'
 import { BlogProvider } from './context/BlogContext.jsx'
 
 createRoot(document.getElementById('root')).render(
-  <AuthProvider>
-    <BrowserRouter>
+  <BrowserRouter>
+    <AuthProvider>
       <BlogProvider>
         <ToastProvider>
           <App />
         </ToastProvider>
       </BlogProvider>
-    </BrowserRouter>
-  </AuthProvider>
+    </AuthProvider>
+  </BrowserRouter>
 )

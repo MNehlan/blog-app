@@ -1,16 +1,10 @@
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { useAuth } from "../hooks/useAuth"
 import '../style/navbar.css'
 
 const Navbar = () => {
-  const { isLogged, dispatch } = useAuth();
-  const navigate = useNavigate()
+  const { isLogged, name, handleLogout } = useAuth();
 
-  function handleLogout() {
-    localStorage.removeItem('token')
-    dispatch({ type: 'LOGOUT' })
-    navigate('/login');
-  }
 
   return (
     <div className="navbar">
@@ -23,15 +17,19 @@ const Navbar = () => {
 
         <div>
           {isLogged ?
-            <div className="nav-links">
-              <Link to='/dashboard' className="nav-btn nav-primary">Dashboard</Link>
-              <button onClick={handleLogout} className="nav-danger nav-btn">Logout
-              </button>
+            <div className="username-nav-links">
+              <span className="username">Welcome,{name}</span>
+              <div className="nav-links">
+                <Link to='/dashboard' className="nav-btn nav-primary">Dashboard</Link>
+                <button onClick={handleLogout} className="nav-danger nav-btn">Logout
+                </button>
+              </div>
             </div> :
             <div className="auth-nav">
               <Link to='/login' className="nav-login nav-btn nav-primary">Login</Link>
               <Link to='/signup' className="nav-secondary nav-btn ">Signup</Link>
-            </div>}
+            </div>
+          }
         </div>
       </div>
     </div>
