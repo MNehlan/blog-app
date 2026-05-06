@@ -2,6 +2,7 @@ import { useState } from "react"
 import api from "../api/api"
 // import { useToast } from "../hooks/useToast"
 import '../style/blogform.css'
+import { useToast } from "../hooks/useToast"
 
 
 const BlogForm = ({ blog, setIsModal, refetch }) => {
@@ -9,6 +10,7 @@ const BlogForm = ({ blog, setIsModal, refetch }) => {
   const [description, setDescription] = useState(blog?.description || '')
   const [image, setImage] = useState(null)
   const [category, setCategory] = useState(blog?.category || '')
+  const { showToast } = useToast()
 
   async function handleAddBlog(e) {
     e.preventDefault();
@@ -23,15 +25,19 @@ const BlogForm = ({ blog, setIsModal, refetch }) => {
     }
     formData.append('category', category)
 
-
-    if (blog) {
-      await api.put(`/api/blog/${blog._id}`, formData)
-    } else {
-      await api.post('/api/blog', formData)
+    try {
+      if (blog) {
+        const { data } = await api.put(`/api/blog/${blog._id}`, formData)
+        showToast(data.message)
+      } else {
+        const { data } = await api.post('/api/blog', formData)
+        showToast(data.message)
+      }
+      refetch();
+      setIsModal(false)
+    } catch (error) {
+      showToast(error.response.data.message, 'error')
     }
-
-    refetch();
-    setIsModal(false)
   }
 
 
@@ -53,9 +59,10 @@ const BlogForm = ({ blog, setIsModal, refetch }) => {
           <label className="label-form">
             Description
           </label>
-          <input type="text"
+          <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)} className="input-blog"
+            rows={4}
           />
           <label className="label-form">
             Image
@@ -66,10 +73,13 @@ const BlogForm = ({ blog, setIsModal, refetch }) => {
           <label className="label-form">
             Category
           </label>
-          <input type="text"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)} className="input-blog"
-          />
+          <select value={category} onChange={(e) => setCategory(e.target.value)} className="input-blog">
+            <option value="">Select category</option>
+            <option value="Technology">Technology</option>
+            <option value="Travel">Travel</option>
+            <option value="Food">Food</option>
+            <option value="Lifestyle">Lifestyle</option>
+          </select>
           <div className="button-group">
             <button onClick={() => setIsModal(false)} className="button-form">
               Cancel

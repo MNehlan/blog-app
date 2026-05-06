@@ -62,7 +62,9 @@ const loginUser = async (req, res) => {
       { expiresIn: '5h' },
     );
 
-    res.status(200).json({ token, name: user.name });
+    res
+      .status(200)
+      .json({ token, name: user.name, message: 'Login Successful' });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

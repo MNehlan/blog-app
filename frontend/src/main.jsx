@@ -8,12 +8,12 @@ import { BlogProvider } from './context/BlogContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
-    <AuthProvider>
-      <BlogProvider>
-        <ToastProvider>
+    <ToastProvider>
+      <AuthProvider>
+        <BlogProvider>
           <App />
-        </ToastProvider>
-      </BlogProvider>
-    </AuthProvider>
+        </BlogProvider>
+      </AuthProvider>
+    </ToastProvider>
   </BrowserRouter>
 )

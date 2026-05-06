@@ -52,7 +52,7 @@ const createBlog = async (req, res) => {
       userId: req.user.id,
     });
     await blog.save();
-    res.status(200).json(blog);
+    res.status(200).json({blog, message: 'Blog Added'});
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

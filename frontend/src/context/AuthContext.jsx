@@ -1,5 +1,6 @@
 import { createContext, useReducer, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useToast } from '../hooks/useToast'
 import api from "../api/api"
 
 export const AuthContext = createContext();
@@ -25,6 +26,7 @@ export const AuthProvider = ({ children }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
+  const { showToast } = useToast()
 
 
   async function handleLogin(e) {
@@ -34,16 +36,18 @@ export const AuthProvider = ({ children }) => {
 
       localStorage.setItem('token', data.token)
       localStorage.setItem('userName', data.name)
+      showToast(data.message, 'success')
       dispatch({ type: 'LOGIN', payload: data.name })
       navigate('/')
     } catch (error) {
-      console.log(error)
+      showToast(error.response.data.message, 'error')
     }
   }
 
   function handleLogout() {
     localStorage.removeItem('token')
     localStorage.removeItem('userName')
+    showToast('Logout Successful', 'success')
     dispatch({ type: 'LOGOUT' })
     navigate('/login');
   }
