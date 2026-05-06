@@ -5,6 +5,9 @@ export const BlogContext = createContext()
 
 export const BlogProvider = ({ children }) => {
   const [blogs, setBlogs] = useState([]);
+  const [search, setSearch] = useState('')
+
+  const filteredBlogs = blogs.filter(blog => blog.title.toLowerCase().includes(search.toLowerCase()))
 
   async function fetchBlogs() {
     setBlogs([])
@@ -13,7 +16,7 @@ export const BlogProvider = ({ children }) => {
   }
 
   return (
-    <BlogContext.Provider value={{ blogs, setBlogs, fetchBlogs }}>
+    <BlogContext.Provider value={{ blogs, setBlogs, fetchBlogs, search, setSearch, filteredBlogs }}>
       {children}
     </BlogContext.Provider>
   )

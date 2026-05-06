@@ -6,7 +6,7 @@ import '../style/home.css'
 
 const Home = () => {
   const { isLogged } = useAuth();
-  const { blogs, fetchBlogs } = useBlog()
+  const { filteredBlogs, fetchBlogs } = useBlog()
 
 
   useEffect(() => {
@@ -15,7 +15,7 @@ const Home = () => {
 
   return (
     <div className="home-container">
-      {blogs.map((blog) => (
+      {filteredBlogs.map((blog) => (
         <div key={blog._id} className="blog-card">
 
           <div className="blog-image-wrapper">

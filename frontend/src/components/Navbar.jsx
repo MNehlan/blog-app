@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom"
 import { useAuth } from "../hooks/useAuth"
+import { useBlog } from '../hooks/useBlog'
 import '../style/navbar.css'
 
 const Navbar = () => {
   const { isLogged, name, handleLogout } = useAuth();
+  const { setSearch } = useBlog()
 
 
   return (
@@ -15,6 +17,12 @@ const Navbar = () => {
           </Link>
         </span>
 
+        <input
+        type="text"
+        placeholder="Search blogs..."
+        onChange={(e) => setSearch(e.target.value)}
+        className="search-input"
+      />
         <div>
           {isLogged ?
             <div className="username-nav-links">
