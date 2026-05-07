@@ -4,7 +4,7 @@ const verifyToken = (req, res, next) => {
   const token = req.headers.authorization;
 
   if (!token) {
-    return res.status(401).json({ message: 'No token' });
+    return res.status(401).json({ message: 'Please Login or Sigup' });
   }
 
   try {

@@ -27,7 +27,10 @@ export const BlogProvider = ({ children }) => {
   }
 
   useEffect(() => {
-    loadBlogs();
+    const token = localStorage.getItem('token');
+    if (token) {
+      loadBlogs();
+    }
   }, [])
 
 
