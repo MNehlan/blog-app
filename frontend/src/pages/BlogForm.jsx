@@ -3,14 +3,16 @@ import api from "../api/api"
 // import { useToast } from "../hooks/useToast"
 import '../style/blogform.css'
 import { useToast } from "../hooks/useToast"
+import { useBlog } from "../hooks/useBlog"
 
 
-const BlogForm = ({ blog, setIsModal, refetch }) => {
+const BlogForm = ({ blog, setIsModal }) => {
   const [title, setTitle] = useState(blog?.title || '')
   const [description, setDescription] = useState(blog?.description || '')
   const [image, setImage] = useState(null)
   const [category, setCategory] = useState(blog?.category || '')
   const { showToast } = useToast()
+  const { loadBlogs } = useBlog()
 
   async function handleAddBlog(e) {
     e.preventDefault();
@@ -33,7 +35,7 @@ const BlogForm = ({ blog, setIsModal, refetch }) => {
         const { data } = await api.post('/api/blog', formData)
         showToast(data.message)
       }
-      refetch();
+      loadBlogs();
       setIsModal(false)
     } catch (error) {
       showToast(error.response.data.message, 'error')

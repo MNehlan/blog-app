@@ -13,16 +13,16 @@ const Navbar = () => {
       <div className="nav-container">
         <span className="title">
           <Link to='/'>
-            Blog App
+            VOXLY
           </Link>
         </span>
 
         <input
-        type="text"
-        placeholder="Search blogs..."
-        onChange={(e) => setSearch(e.target.value)}
-        className="search-input"
-      />
+          type="text"
+          placeholder="Search blogs..."
+          onChange={(e) => setSearch(e.target.value)}
+          className="search-input"
+        />
         <div>
           {isLogged ?
             <div className="username-nav-links">

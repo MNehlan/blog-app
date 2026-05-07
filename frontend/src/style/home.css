@@ -75,6 +75,7 @@
     font-size: 13px;
   }
 }
+
 .blog-desc {
   font-size: 14px;
   color: #4b5563;
@@ -82,16 +83,20 @@
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
-
   overflow: hidden;
 }
 
 .blog-footer {
-  margin-top: 14px;
+  margin-top: 12px;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.blog-date {
+  font-size: 13px;
+  color: #6b7280;
 }
 
 .blog-category {

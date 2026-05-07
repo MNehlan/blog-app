@@ -1,39 +1,20 @@
-import { useToast } from "../hooks/useToast";
+import { useState } from "react";
 import BlogForm from "./BlogForm";
+import { useBlog } from '../hooks/useBlog'
 import '../style/dashboard.css'
-import api from "../api/api";
-import { useEffect, useState } from "react";
 
 const DashBoard = () => {
-  const { showToast } = useToast();
+  const { userBlog, deleteBlog } = useBlog();
   const [isModal, setIsModal] = useState(false)
-  const [userBlog, setUserBlog] = useState([])
   const [selectedBlog, setSelectedBlog] = useState(null)
 
-  async function userBlogs() {
-    try {
-      const { data } = await api.get('/api/blog/user')
-      setUserBlog(data)
-    } catch (error) {
-      showToast(error.response.data.message, 'error')
-    }
-  }
-
-  async function deleteBlog(id) {
-    await api.delete(`/api/blog/${id}`)
-    userBlogs()
-  }
-
-  useEffect(() => {
-    userBlogs();
-  }, [])
 
   return (
     <div className="dashboard">
 
       <div className="dashboard-header">
         <h1 className="dashboard-title">
-          {userBlog.length > 0 ? 'Your Blogs': 'No Blogs Found'}
+          {userBlog.length > 0 ? 'Your Blogs' : 'No Blogs Found'}
         </h1>
 
         <button
@@ -72,13 +53,16 @@ const DashBoard = () => {
               <p className="card-desc">{blog.description}</p>
 
               <span className="card-category">{blog.category}</span>
+              <span className="blog-date">
+                {new Date(blog.createdAt).toLocaleDateString()}
+              </span>
             </div>
 
           </div>
         ))}
       </div>
 
-      {isModal && <BlogForm blog={selectedBlog} setIsModal={setIsModal} refetch={userBlogs} />}
+      {isModal && <BlogForm blog={selectedBlog} setIsModal={setIsModal} />}
 
     </div>
   )

@@ -32,6 +32,10 @@ const Home = () => {
 
             <div className="blog-footer">
               <span className="blog-category">{blog.category}</span>
+              <span className="blog-date">
+                {new Date(blog.createdAt).toLocaleDateString()}
+              </span>
+              <span>{blog.userId.name}</span>
               <button className="read-more"><Link to={`/blog/${blog._id}`}>
                 Read
               </Link>
